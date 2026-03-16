@@ -574,7 +574,7 @@
                 We'd love to hear about your project. Let's schedule a free discovery call and explore how we can bring your vision to life.
             </p>
             <div class="flex flex-wrap gap-4 justify-center">
-                <a href="{{ url('/contact') }}"
+                <a href="{{ url('/works') }}"
                    class="group inline-flex items-center gap-3 bg-lime text-navy font-mono font-bold text-base px-10 py-5 rounded-full hover:bg-lime/90 transition-all duration-300 shadow-2xl shadow-lime/20 hover:shadow-lime/30 hover:scale-105">
                     Start a Project
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

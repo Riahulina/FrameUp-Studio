@@ -50,3 +50,6 @@ Route::get('/pemesanan/create', [PemesananController::class, 'create']);
 Route::post('/pemesanan/store', [PemesananController::class, 'store']);
 Route::post('/pembayaran/store', [PembayaranController::class, 'store']);
 Route::post('/survei/store', [SurveiController::class, 'store']);
+
+Route::get('/pemesanan', [App\Http\Controllers\PemesananController::class, 'index']);
+Route::post('/pemesanan', [App\Http\Controllers\PemesananController::class, 'store']);

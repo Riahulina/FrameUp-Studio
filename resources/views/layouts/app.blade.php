@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FrameUp Studio - Creative Design & Visual Storytelling">
     <link rel="icon" href="/images/logo.png">
-    
+
     <title>@yield('title', 'FrameUp Studio')</title>
-    
+
 
     {{-- Tailwind CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,72 +23,91 @@
             theme: {
                 extend: {
                     colors: {
-                        navy:     '#0E0E51',
+                        navy: '#0E0E51',
                         lavender: '#D1C5F8',
-                        pink:     '#F7A8C2',
-                        dusty:    '#D88B9F',
-                        cream:    '#E3E1CD',
-                        grey:     '#A9A5AE',
-                        lime:     '#E6F06A',
-                        green:    '#DFF3A3',
-                        blush:    '#FAD6E3',
+                        pink: '#F7A8C2',
+                        dusty: '#D88B9F',
+                        cream: '#E3E1CD',
+                        grey: '#A9A5AE',
+                        lime: '#E6F06A',
+                        green: '#DFF3A3',
+                        blush: '#FAD6E3',
                         charcoal: '#4D434C',
-                        warm:     '#786C6C',
-                        nude:     '#A2867B',
+                        warm: '#786C6C',
+                        nude: '#A2867B',
                     },
                     fontFamily: {
                         display: ['Playfair Display', 'serif'],
-                        body:    ['DM Sans', 'sans-serif'],
-                        mono:    ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                        mono: ['Space Grotesk', 'sans-serif'],
                     },
                     animation: {
-                        'float':        'float 6s ease-in-out infinite',
-                        'float-slow':   'float 9s ease-in-out infinite',
-                        'spin-slow':    'spin 20s linear infinite',
-                        'pulse-slow':   'pulse 4s ease-in-out infinite',
-                        'slide-up':     'slideUp 0.8s ease forwards',
-                        'fade-in':      'fadeIn 1s ease forwards',
-                        'marquee':      'marquee 20s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 9s ease-in-out infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s ease forwards',
+                        'fade-in': 'fadeIn 1s ease forwards',
+                        'marquee': 'marquee 20s linear infinite',
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%':      { transform: 'translateY(-20px)' },
+                            '0%, 100%': {
+                                transform: 'translateY(0px)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-20px)'
+                            },
                         },
                         slideUp: {
-                            from: { opacity: '0', transform: 'translateY(40px)' },
-                            to:   { opacity: '1', transform: 'translateY(0)' },
+                            from: {
+                                opacity: '0',
+                                transform: 'translateY(40px)'
+                            },
+                            to: {
+                                opacity: '1',
+                                transform: 'translateY(0)'
+                            },
                         },
                         fadeIn: {
-                            from: { opacity: '0' },
-                            to:   { opacity: '1' },
+                            from: {
+                                opacity: '0'
+                            },
+                            to: {
+                                opacity: '1'
+                            },
                         },
                         marquee: {
-                            '0%':   { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
+                            '0%': {
+                                transform: 'translateX(0)'
+                            },
+                            '100%': {
+                                transform: 'translateX(-50%)'
+                            },
                         },
                     },
                 }
             }
         }
- 
 
-        function openModal(){
-            document.getElementById('modalPemesanan').classList.remove('hidden');
-            document.getElementById('modalPemesanan').classList.add('flex');
+
+        function openModal() {
+            const modal = document.getElementById('modalPemesanan');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        function closeModal(){
-            document.getElementById('modalPemesanan').classList.remove('flex');
-            document.getElementById('modalPemesanan').classList.add('hidden');
+        function closeModal() {
+            const modal = document.getElementById('modalPemesanan');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
-
-
-
     </script>
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -97,9 +117,18 @@
         }
 
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0E0E51; }
-        ::-webkit-scrollbar-thumb { background: #D1C5F8; border-radius: 3px; }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0E0E51;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D1C5F8;
+            border-radius: 3px;
+        }
 
         /* Noise texture overlay */
         body::before {
@@ -116,9 +145,11 @@
         .blob-1 {
             border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
         }
+
         .blob-2 {
             border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
         }
+
         .blob-3 {
             border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%;
         }
@@ -127,9 +158,10 @@
         .sticker {
             display: inline-block;
             transform: rotate(-3deg);
-            filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
             transition: transform 0.3s ease;
         }
+
         .sticker:hover {
             transform: rotate(2deg) scale(1.05);
         }
@@ -138,9 +170,10 @@
         .card-hover {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
+
         .card-hover:hover {
             transform: translateY(-8px) rotate(0.5deg);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
         /* Nav link underline */
@@ -152,7 +185,10 @@
             background: #E6F06A;
             transition: width 0.3s ease;
         }
-        .nav-link:hover::after { width: 100%; }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
         /* Text gradient */
         .text-gradient {
@@ -175,6 +211,7 @@
             max-height: 0;
             overflow: hidden;
         }
+
         #mobile-menu.open {
             max-height: 400px;
         }
@@ -185,6 +222,7 @@
             transform: translateY(30px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
+
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
@@ -192,7 +230,8 @@
 
         /* Cursor dot */
         .cursor-dot {
-            width: 12px; height: 12px;
+            width: 12px;
+            height: 12px;
             background: #E6F06A;
             border-radius: 50%;
             position: fixed;
@@ -201,9 +240,11 @@
             transition: transform 0.1s ease;
             mix-blend-mode: difference;
         }
+
         .cursor-ring {
-            width: 36px; height: 36px;
-            border: 2px solid rgba(230,240,106,0.5);
+            width: 36px;
+            height: 36px;
+            border: 2px solid rgba(230, 240, 106, 0.5);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -213,31 +254,34 @@
         }
 
         @media (max-width: 768px) {
-            .cursor-dot, .cursor-ring { display: none; }
-        }
-  
 
-        @keyframes fadeIn{
-        from{
-        opacity:0;
-        transform:scale(0.9);
-        }
-        to{
-        opacity:1;
-        transform:scale(1);
-        }
-        }
-
-        .animate-fadeIn{
-        animation:fadeIn .3s ease;
+            .cursor-dot,
+            .cursor-ring {
+                display: none;
+            }
         }
 
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
 
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn .3s ease;
+        }
     </style>
 
     @stack('head')
 </head>
+
 <body>
 
     {{-- Custom Cursor --}}
@@ -258,21 +302,25 @@
     {{-- Scripts --}}
     <script>
         // Custom cursor
-        const dot  = document.getElementById('cursorDot');
+        const dot = document.getElementById('cursorDot');
         const ring = document.getElementById('cursorRing');
-        let mx = 0, my = 0, rx = 0, ry = 0;
+        let mx = 0,
+            my = 0,
+            rx = 0,
+            ry = 0;
 
         document.addEventListener('mousemove', e => {
-            mx = e.clientX; my = e.clientY;
-            dot.style.left  = mx - 6  + 'px';
-            dot.style.top   = my - 6  + 'px';
+            mx = e.clientX;
+            my = e.clientY;
+            dot.style.left = mx - 6 + 'px';
+            dot.style.top = my - 6 + 'px';
         });
 
         function animRing() {
             rx += (mx - rx - 18) * 0.12;
             ry += (my - ry - 18) * 0.12;
             ring.style.left = rx + 'px';
-            ring.style.top  = ry + 'px';
+            ring.style.top = ry + 'px';
             requestAnimationFrame(animRing);
         }
         animRing();
@@ -285,11 +333,13 @@
                     setTimeout(() => entry.target.classList.add('visible'), i * 100);
                 }
             });
-        }, { threshold: 0.1 });
+        }, {
+            threshold: 0.1
+        });
         reveals.forEach(el => observer.observe(el));
 
         // Mobile menu
-        const menuBtn  = document.getElementById('menuBtn');
+        const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuBtn) {
             menuBtn.addEventListener('click', () => {
@@ -317,4 +367,5 @@
 
     @stack('scripts')
 </body>
+
 </html>
