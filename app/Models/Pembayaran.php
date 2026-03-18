@@ -15,10 +15,14 @@ class Pembayaran extends Model
         'total_bayar',
         'tanggal_bayar',
         'status_bayar'
+        
     ];
 
     public function pemesanan()
     {
         return $this->belongsTo(Pemesanan::class,'id_pemesanan');
     }
+
+    
+
 }

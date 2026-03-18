@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('pembayarans', function (Blueprint $table) {
@@ -18,15 +15,17 @@ return new class extends Migration
             $table->integer('total_bayar');
             $table->date('tanggal_bayar');
             $table->string('status_bayar')->default('belum bayar');
+
+            $table->string('bukti')->nullable(); // 🔥 TAMBAH INI
+
             $table->timestamps();
 
-            $table->foreign('id_pemesanan')->references('id_pemesanan')->on('pemesanans');
+            $table->foreign('id_pemesanan')
+                  ->references('id_pemesanan')
+                  ->on('pemesanans');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('pembayarans');

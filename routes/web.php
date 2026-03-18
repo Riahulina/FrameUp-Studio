@@ -53,3 +53,9 @@ Route::post('/survei/store', [SurveiController::class, 'store']);
 
 Route::get('/pemesanan', [App\Http\Controllers\PemesananController::class, 'index']);
 Route::post('/pemesanan', [App\Http\Controllers\PemesananController::class, 'store']);
+
+
+
+Route::get('/pembayaran/{id}', [PembayaranController::class, 'create']);
+Route::post('/pembayaran', [PembayaranController::class, 'store']);
+Route::get('/struk/{id}', [PembayaranController::class, 'struk']);
