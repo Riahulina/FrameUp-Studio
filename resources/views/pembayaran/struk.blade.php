@@ -22,17 +22,17 @@
         @php $total = 0; @endphp
 
         @foreach($pemesanan->details as $item)
-            @if($item->frame)
-                @php
-                    $subtotal = $item->frame->harga * $item->qty;
-                    $total += $subtotal;
-                @endphp
+        @if($item->frame)
+        @php
+        $subtotal = $item->frame->harga * $item->qty;
+        $total += $subtotal;
+        @endphp
 
-                <div class="flex justify-between">
-                    <span>{{ $item->frame->nama_frame }} (x{{ $item->qty }})</span>
-                    <span>Rp {{ number_format($subtotal,0,',','.') }}</span>
-                </div>
-            @endif
+        <div class="flex justify-between">
+            <span>{{ $item->frame->nama_frame }} (x{{ $item->qty }})</span>
+            <span>Rp {{ number_format($subtotal,0,',','.') }}</span>
+        </div>
+        @endif
         @endforeach
 
         <hr class="my-4">
@@ -43,14 +43,16 @@
         </div>
 
         <p class="text-center mt-6 text-green-600 font-bold">
-            ✔ Pembayaran Berhasil
+            ✔ Pesanan Berhasil Dibuat
         </p>
 
-        <!-- tombol print -->
-        <button onclick="window.print()" 
-            class="w-full mt-4 bg-blue-500 text-white p-3 rounded">
-            Print Struk
-        </button>
+        <div class="flex justify-center mt-4">
+            <a href="{{ url('/struk/'.$pemesanan->id_pemesanan.'/download') }}"
+                class="bg-blue-500 text-white px-4 py-2 rounded">
+                Unduh Struk PDF
+            </a>
+        </div>
+
 
     </div>
 

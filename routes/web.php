@@ -7,6 +7,7 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SurveiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrameController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes — FrameUp Studio
@@ -59,3 +60,6 @@ Route::post('/pemesanan', [App\Http\Controllers\PemesananController::class, 'sto
 Route::get('/pembayaran/{id}', [PembayaranController::class, 'create']);
 Route::post('/pembayaran', [PembayaranController::class, 'store']);
 Route::get('/struk/{id}', [PembayaranController::class, 'struk']);
+Route::get('/struk/{id}/download', [PembayaranController::class, 'download']);
+
+Route::get('/admin', [DashboardController::class, 'index']);

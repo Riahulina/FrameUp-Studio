@@ -17,22 +17,22 @@ class PemesananController extends Controller
 
     public function store(Request $request)
     {
-        // ✅ VALIDASI (biar aman)
+        //  VALIDASI (biar aman)
         $request->validate([
             'nama' => 'required',
             'no_hp' => 'required',
             'frame' => 'required|array|min:1'
         ]);
 
-        // ✅ ambil jurusan (dropdown / manual)
+        //  ambil jurusan (dropdown / manual)
         $jurusan = $request->jurusan_select == 'lainnya'
             ? $request->jurusan_manual
             : $request->jurusan_select;
 
-        // ✅ ambil 1 frame sebagai FK utama
+        // ambil 1 frame sebagai FK utama
         $idFrameUtama = $request->frame[0];
 
-        // ✅ simpan pemesanan
+        //  simpan pemesanan
         $pemesanan = Pemesanan::create([
             'nama_pelanggan' => $request->nama,
             'no_hp' => $request->no_hp,
@@ -42,7 +42,7 @@ class PemesananController extends Controller
             'status' => 'menunggu'
         ]);
 
-        // ✅ simpan banyak frame ke detail
+        // simpan banyak frame ke detail
         foreach ($request->frame as $id_frame) {
             DetailPemesanan::create([
                 'id_pemesanan' => $pemesanan->id_pemesanan,

@@ -13,7 +13,7 @@ class Pemesanan extends Model
     'nama_pelanggan',
     'no_hp',
     'jurusan',
-    'id_frame', // 🔥 WAJIB ADA INI
+    'id_frame', 
     'tanggal_pemesanan',
     'status'
 ];
