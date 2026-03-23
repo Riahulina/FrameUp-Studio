@@ -9,12 +9,27 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PembayaranController extends Controller
 {
+    // =========================
+    // ADMIN: LIST PEMBAYARAN
+    // =========================
+    public function index()
+    {
+        $data = Pembayaran::with('pemesanan')->latest()->get();
+        return view('admin.pembayaran', compact('data'));
+    }
+
+    // =========================
+    // FORM PEMBAYARAN
+    // =========================
     public function create($id)
     {
         $pemesanan = Pemesanan::with('details.frame')->findOrFail($id);
         return view('pembayaran.form', compact('pemesanan'));
     }
 
+    // =========================
+    // SIMPAN PEMBAYARAN
+    // =========================
     public function store(Request $request)
     {
         $request->validate([
@@ -29,7 +44,7 @@ class PembayaranController extends Controller
         $pembayaran->tanggal_bayar = now();
         $pembayaran->status_bayar = 'menunggu';
 
-        // upload bukti
+        // Upload bukti (opsional)
         if ($request->hasFile('bukti')) {
             $path = $request->file('bukti')->store('bukti_pembayaran', 'public');
             $pembayaran->bukti = $path;
@@ -37,12 +52,14 @@ class PembayaranController extends Controller
 
         $pembayaran->save();
 
-        //  redirect ke struk
+        // 🔥 Redirect ke STRUK (bukan balik ke form)
         return redirect('/pembayaran/' . $request->id_pemesanan)
             ->with('success', 'Pesanan berhasil dibuat!');
     }
 
-    // FUNCTION STRUK (HARUS DI LUAR)
+    // =========================
+    // TAMPILKAN STRUK
+    // =========================
     public function struk($id)
     {
         $pemesanan = Pemesanan::with('details.frame')->findOrFail($id);
@@ -51,10 +68,13 @@ class PembayaranController extends Controller
         return view('pembayaran.struk', compact('pemesanan', 'pembayaran'));
     }
 
+    // =========================
+    // DOWNLOAD STRUK PDF
+    // =========================
     public function download($id)
     {
-        $pemesanan = \App\Models\Pemesanan::with('details.frame')->findOrFail($id);
-        $pembayaran = \App\Models\Pembayaran::where('id_pemesanan', $id)->first();
+        $pemesanan = Pemesanan::with('details.frame')->findOrFail($id);
+        $pembayaran = Pembayaran::where('id_pemesanan', $id)->first();
 
         $pdf = Pdf::loadView('pembayaran.struk_pdf', compact('pemesanan', 'pembayaran'));
 

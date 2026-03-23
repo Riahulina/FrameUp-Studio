@@ -19,7 +19,7 @@
         </div>
         @endif
 
-        <form action="{{ url('/pemesanan') }}" method="POST" class="space-y-4">
+        <form action="{{ route('pemesanan.store') }}" method="POST" class="space-y-4">
             @csrf
 
             <!-- NAMA -->
@@ -44,17 +44,15 @@
                 placeholder="Isi jurusan jika tidak ada"
                 class="w-full mt-2 bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3 hidden">
 
-            <!-- FRAME SLIDER -->
+            <!-- FRAME -->
             <div class="bg-navy border border-lavender/20 rounded-xl p-4">
                 <p class="text-sm text-warm mb-3">Pilih Frame</p>
 
                 <div class="flex items-center gap-2">
 
-                    <!-- PREV -->
                     <button type="button" onclick="prevFrame()"
                         class="px-3 py-1 bg-lime text-navy rounded">‹</button>
 
-                    <!-- SLIDER -->
                     <div class="overflow-hidden w-full">
                         <div id="frameSlider" class="flex transition-all duration-300">
 
@@ -63,7 +61,7 @@
                                 <div class="border border-lavender/20 rounded-xl p-3 text-center">
 
                                     <input type="checkbox" name="frame[]" value="{{ $frame->id_frame }}">
-                                    
+
                                     <p class="text-sm mt-2">{{ $frame->nama_frame }}</p>
 
                                     <input type="number" name="qty[{{ $frame->id_frame }}]" min="1" value="1"
@@ -75,7 +73,6 @@
                         </div>
                     </div>
 
-                    <!-- NEXT -->
                     <button type="button" onclick="nextFrame()"
                         class="px-3 py-1 bg-lime text-navy rounded">›</button>
 
@@ -98,47 +95,47 @@
 
 <!-- SCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    // ✅ JURUSAN MANUAL
-    const select = document.getElementById('jurusanSelect');
-    const manual = document.getElementById('jurusanManual');
+        // ✅ JURUSAN MANUAL
+        const select = document.getElementById('jurusanSelect');
+        const manual = document.getElementById('jurusanManual');
 
-    select.addEventListener('change', function () {
-        if (this.value === 'lainnya') {
-            manual.classList.remove('hidden');
-        } else {
-            manual.classList.add('hidden');
-        }
+        select.addEventListener('change', function() {
+            if (this.value === 'lainnya') {
+                manual.classList.remove('hidden');
+            } else {
+                manual.classList.add('hidden');
+            }
+        });
+
     });
 
-});
+    // ✅ SLIDER
+    let currentIndex = 0;
+    const visibleItems = 3;
 
-// ✅ SLIDER
-let currentIndex = 0;
-const visibleItems = 3;
-
-function updateSlider() {
-    const slider = document.getElementById('frameSlider');
-    const itemWidth = slider.children[0].offsetWidth;
-    slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-}
-
-function nextFrame() {
-    const slider = document.getElementById('frameSlider');
-    const totalItems = slider.children.length;
-
-    if (currentIndex < totalItems - visibleItems) {
-        currentIndex++;
-        updateSlider();
+    function updateSlider() {
+        const slider = document.getElementById('frameSlider');
+        const itemWidth = slider.children[0].offsetWidth;
+        slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
     }
-}
 
-function prevFrame() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
+    function nextFrame() {
+        const slider = document.getElementById('frameSlider');
+        const totalItems = slider.children.length;
+
+        if (currentIndex < totalItems - visibleItems) {
+            currentIndex++;
+            updateSlider();
+        }
     }
-}
+
+    function prevFrame() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlider();
+        }
+    }
 </script>
 @endsection

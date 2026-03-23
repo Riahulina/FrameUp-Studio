@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class PemesananController extends Controller
 {
+    // 🔥 INI YANG KAMU BUTUH
+    public function index()
+    {
+        $data = Pemesanan::latest()->get();
+        return view('admin.pemesanan', compact('data'));
+    }
+
     public function create()
     {
         $frames = Frame::all();
@@ -17,32 +24,29 @@ class PemesananController extends Controller
 
     public function store(Request $request)
     {
-        //  VALIDASI (biar aman)
         $request->validate([
             'nama' => 'required',
             'no_hp' => 'required',
             'frame' => 'required|array|min:1'
         ]);
 
-        //  ambil jurusan (dropdown / manual)
         $jurusan = $request->jurusan_select == 'lainnya'
             ? $request->jurusan_manual
             : $request->jurusan_select;
 
-        // ambil 1 frame sebagai FK utama
         $idFrameUtama = $request->frame[0];
 
-        //  simpan pemesanan
         $pemesanan = Pemesanan::create([
             'nama_pelanggan' => $request->nama,
             'no_hp' => $request->no_hp,
             'jurusan' => $jurusan,
-            'id_frame' => $idFrameUtama, // 🔥 WAJIB isi
+            'id_frame' => $idFrameUtama,
             'tanggal_pemesanan' => $request->tanggal,
             'status' => 'menunggu'
         ]);
 
-        // simpan banyak frame ke detail
+  
+
         foreach ($request->frame as $id_frame) {
             DetailPemesanan::create([
                 'id_pemesanan' => $pemesanan->id_pemesanan,
@@ -52,5 +56,17 @@ class PemesananController extends Controller
         }
 
         return redirect('/pembayaran/' . $pemesanan->id_pemesanan);
+    }
+
+    public function updateStatus($id)
+    {
+        $pemesanan = Pemesanan::findOrFail($id);
+
+        // toggle status
+        $pemesanan->status = $pemesanan->status == 'menunggu' ? 'selesai' : 'menunggu';
+
+        $pemesanan->save();
+
+        return redirect()->back();
     }
 }
