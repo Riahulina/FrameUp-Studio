@@ -1,87 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Frame</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@extends('layouts.admin')
 
-<body class="bg-gray-100">
+@section('content')
 
-<div class="flex">
+{{-- HERO --}}
+<section class="pt-24 pb-12 bg-navy relative overflow-hidden rounded-2xl shadow-lg mb-10">
+    <div class="max-w-7xl mx-auto px-6 text-center">
 
-    <!-- SIDEBAR -->
-    <div class="w-64 bg-blue-950 text-white min-h-screen p-6">
-        <h2 class="text-2xl font-bold text-pink-400 mb-8">
-            FrameUp Studio
-        </h2>
+        <span class="text-lime/70 text-xs tracking-[0.3em] uppercase mb-2 block">
+            Admin Panel
+        </span>
 
-        <ul class="space-y-4">
-            <li><a href="/dashboard" class="block hover:text-pink-400">Dashboard</a></li>
-            <li><a href="/frame" class="block text-pink-400 font-bold">Frame</a></li>
-        </ul>
+        <h1 class="text-5xl lg:text-6xl text-lavender font-bold mb-2">
+            Frame <span class="italic text-pink">Management</span>
+        </h1>
+
+        <p class="text-warm text-lg max-w-xl mx-auto">
+            Kelola semua data frame yang tersedia di FrameUp Studio.
+        </p>
     </div>
+</section>
 
-    <!-- CONTENT -->
-    <div class="flex-1 p-6">
-
-        <h1 class="text-3xl font-bold mb-6">Data Frame</h1>
-
-        <!-- ALERT -->
-        @if(session('success'))
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <!-- BUTTON TAMBAH -->
-        <a href="/frame/create"
-           class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">
-            + Tambah Frame
-        </a>
-
-        <!-- TABLE -->
-        <div class="bg-white p-4 rounded shadow">
-            <table class="w-full">
-                <thead>
-                    <tr class="border-b">
-                        <th class="p-2">Gambar</th>
-                        <th class="p-2">Nama</th>
-                        <th class="p-2">Jurusan</th>
-                        <th class="p-2">Harga</th>
-                        <th class="p-2">Aksi</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach($frames as $f)
-                    <tr class="border-b text-center">
-
-                        <td class="p-2">
-                            <img src="{{ asset($f->gambar_frame) }}" class="w-20 mx-auto">
-                        </td>
-
-                        <td class="p-2">{{ $f->nama_frame }}</td>
-                        <td class="p-2">{{ $f->jurusan }}</td>
-                        <td class="p-2">Rp {{ number_format($f->harga,0,',','.') }}</td>
-
-                        <td class="p-2">
-                            <a href="/frame/delete/{{ $f->id }}"
-                               class="bg-red-500 text-white px-3 py-1 rounded"
-                               onclick="return confirm('Yakin hapus?')">
-                               Hapus
-                            </a>
-                        </td>
-
-                    </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-        </div>
-
+{{-- ALERT --}}
+@if(session('success'))
+    <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-6 shadow">
+        {{ session('success') }}
     </div>
+@endif
+
+{{-- ACTION --}}
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl text-center lg:text-3xl text-lavender font-bold mb-2">
+            Daftar <span class="italic text-pink">Frame</span></h2>
+
+    <a href="/frame/create"
+       class="bg-lime text-navy px-4 py-2 rounded-xl shadow hover:scale-105 transition">
+        + Tambah Frame
+    </a>
+</div>
+
+{{-- TABLE CARD --}}
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+
+    <table class="w-full text-sm">
+
+        {{-- HEAD --}}
+        <thead class="bg-lavender/10 text-navy uppercase text-xs tracking-wider">
+            <tr>
+                <th class="px-4 py-3 text-left">Preview</th>
+                <th class="px-4 py-3 text-left">Nama</th>
+                <th class="px-4 py-3 text-left">Jurusan</th>
+                <th class="px-4 py-3 text-left">Harga</th>
+                <th class="px-4 py-3 text-center">Aksi</th>
+            </tr>
+        </thead>
+
+        {{-- BODY --}}
+        <tbody class="divide-y divide-lavender/20">
+
+            @forelse($frames as $f)
+            <tr class="hover:bg-lavender/5 transition">
+
+                {{-- IMAGE --}}
+                <td class="px-4 py-3">
+                    <img src="{{ asset($f->gambar_frame) }}"
+                         class="w-16 h-16 object-cover rounded-lg shadow">
+                </td>
+
+                {{-- DATA --}}
+                <td class="px-4 py-3 font-medium text-gray-700">
+                    {{ $f->nama_frame }}
+                </td>
+
+                <td class="px-4 py-3 text-gray-600">
+                    {{ $f->jurusan }}
+                </td>
+
+                <td class="px-4 py-3 text-green-600 font-semibold">
+                    Rp {{ number_format($f->harga,0,',','.') }}
+                </td>
+
+                {{-- ACTION --}}
+                <td class="px-4 py-3 text-center space-x-2">
+
+                    <a href="/frame/delete/{{ $f->id }}"
+                       class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                       onclick="return confirm('Yakin hapus?')">
+                        Hapus
+                    </a>
+
+                </td>
+
+            </tr>
+            @empty
+            <tr>
+                <td colspan="5" class="text-center p-6 text-gray-400">
+                    Belum ada data frame
+                </td>
+            </tr>
+            @endforelse
+
+        </tbody>
+
+    </table>
 
 </div>
 
-</body>
-</html>
+@endsection

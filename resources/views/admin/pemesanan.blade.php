@@ -1,83 +1,102 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.admin')
 
-<head>
-    <title>Data Pemesanan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
 
-<body class="bg-gray-100">
+{{-- HERO --}}
+<section class="pt-20 pb-10 bg-navy rounded-2xl shadow-lg mb-8 text-center">
+    <span class="text-lime/70 text-xs tracking-[0.3em] uppercase block mb-2">
+        Admin Panel
+    </span>
 
-    <div class="flex">
+    <h1 class="text-4xl lg:text-5xl font-bold text-lavender">
+        Data <span class="italic text-pink">Pemesanan</span>
+    </h1>
 
-        <!-- SIDEBAR -->
-        <div class="w-64 bg-blue-950 text-white min-h-screen p-6">
-            <h2 class="text-2xl font-bold text-pink-400 mb-8">
-                FrameUp Studio
-            </h2>
+    <p class="text-warm mt-2">
+        Kelola semua pesanan pelanggan
+    </p>
+</section>
 
-            <ul class="space-y-4">
-                <li><a href="/dashboard" class="block hover:text-pink-400">Dashboard</a></li>
-                <li><a href="/frame" class="block hover:text-pink-400">Frame</a></li>
-                <li><a href="/pemesanan" class="block text-pink-400 font-bold">Pemesanan</a></li>
-            </ul>
-        </div>
+{{-- TABLE CARD --}}
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
-        <!-- CONTENT -->
-        <div class="flex-1 p-6">
-
-            <h1 class="text-3xl font-bold mb-6">Data Pemesanan</h1>
-
-            <div class="bg-white p-4 rounded shadow">
-                <table class="w-full text-center">
-
-                    <thead>
-                        <tr class="border-b bg-gray-50">
-                            <th class="p-2">Nama</th>
-                            <th class="p-2">No HP</th>
-                            <th class="p-2">Jurusan</th>
-                            <th class="p-2">Tanggal</th>
-                            <th class="p-2">Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @forelse($data as $p)
-                        <tr class="border-b hover:bg-gray-50">
-
-                            <td class="p-2">{{ $p->nama_pelanggan }}</td>
-                            <td class="p-2">{{ $p->no_hp }}</td>
-                            <td class="p-2">{{ $p->jurusan }}</td>
-                            <td class="p-2">{{ $p->tanggal_pemesanan }}</td>
-
-                            <td class="p-2">
-
-                                <a href="/pemesanan/status/{{ $p->id_pemesanan }}"
-                                    class="px-3 py-1 rounded text-white inline-block
-                                    {{ $p->status == 'menunggu' ? 'bg-yellow-500' : 'bg-green-500' }}">
-                                    {{ $p->status }}
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="p-4 text-gray-500">
-                                Belum ada data pemesanan
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-
-                </table>
-            </div>
-
-        </div>
-
+    <div class="px-6 py-6 border-b text-center">
+        <h2 class="text-2xl lg:text-3xl font-bold text-navy">
+            Daftar <span class="italic text-pink">Pemesanan</span>
+        </h2>
+        <p class="text-sm text-gray-400 mt-1">
+            Data transaksi pemesanan terbaru
+        </p>
     </div>
 
-</body>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
 
-</html>
+            {{-- HEAD --}}
+            <thead class="bg-lavender/10 text-navy uppercase text-xs tracking-wider">
+                <tr>
+                    <th class="px-4 py-3 text-left">Nama</th>
+                    <th class="px-4 py-3 text-left">No HP</th>
+                    <th class="px-4 py-3 text-left">Jurusan</th>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-center">Status</th>
+                </tr>
+            </thead>
+
+            {{-- BODY --}}
+            <tbody class="divide-y divide-lavender/20">
+
+                @forelse($data as $p)
+                <tr class="hover:bg-lavender/5 transition">
+
+                    {{-- Nama --}}
+                    <td class="px-4 py-3 font-medium text-gray-700">
+                        {{ $p->nama_pelanggan }}
+                    </td>
+
+                    {{-- No HP --}}
+                    <td class="px-4 py-3 text-gray-600">
+                        {{ $p->no_hp }}
+                    </td>
+
+                    {{-- Jurusan --}}
+                    <td class="px-4 py-3">
+                        <span class="bg-lime/20 text-navy px-3 py-1 rounded-full text-xs font-semibold">
+                            {{ $p->jurusan }}
+                        </span>
+                    </td>
+
+                    {{-- Tanggal --}}
+                    <td class="px-4 py-3 text-gray-500">
+                        {{ $p->tanggal_pemesanan }}
+                    </td>
+
+                    {{-- Status --}}
+                    <td class="px-4 py-3 text-center">
+                        <a href="/pemesanan/status/{{ $p->id_pemesanan }}"
+                            class="px-4 py-1 rounded-full text-white text-xs font-semibold shadow
+                           transition hover:scale-105
+                           {{ $p->status == 'menunggu' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-500 hover:bg-green-600' }}">
+
+                            {{ ucfirst($p->status) }}
+
+                        </a>
+                    </td>
+
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center p-6 text-gray-400">
+                        Belum ada data pemesanan
+                    </td>
+                </tr>
+                @endforelse
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+@endsection

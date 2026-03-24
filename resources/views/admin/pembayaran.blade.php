@@ -1,102 +1,106 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Data Pembayaran</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@extends('layouts.admin')
 
-<body class="bg-gray-100">
+@section('content')
 
-<div class="flex">
+{{-- HERO --}}
+<section class="pt-20 pb-10 bg-navy rounded-2xl shadow-lg mb-8 text-center">
+    <span class="text-lime/70 text-xs tracking-[0.3em] uppercase block mb-2">
+        Admin Panel
+    </span>
 
-    <!-- SIDEBAR -->
-    <div class="w-64 bg-blue-950 text-white min-h-screen p-6">
-        <h2 class="text-2xl font-bold text-pink-400 mb-8">
-            FrameUp Studio
-        </h2>
+    <h1 class="text-4xl lg:text-5xl font-bold text-lavender">
+        Data <span class="italic text-pink">Pembayaran</span>
+    </h1>
 
-        <ul class="space-y-4">
-            <li><a href="/dashboard" class="block hover:text-pink-400">Dashboard</a></li>
-            <li><a href="/frame" class="block hover:text-pink-400">Frame</a></li>
-            <li><a href="/pemesanan" class="block hover:text-pink-400">Pemesanan</a></li>
-            <li><a href="/admin/pembayaran" class="block text-pink-400 font-bold">Pembayaran</a></li>
-        </ul>
-    </div>
+    <p class="text-warm mt-2">
+        Kelola dan verifikasi pembayaran pelanggan
+    </p>
+</section>
 
-    <!-- CONTENT -->
-    <div class="flex-1 p-6">
-
-        <h1 class="text-3xl font-bold mb-6">Data Pembayaran</h1>
-
-        <div class="bg-white p-4 rounded shadow overflow-x-auto">
-
-            <table class="w-full text-center">
-                <thead>
-                    <tr class="border-b bg-gray-50">
-                        <th class="p-2">Nama</th>
-                        <th class="p-2">Metode</th>
-                        <th class="p-2">Total</th>
-                        <th class="p-2">Tanggal</th>
-                        <th class="p-2">Bukti</th>
-                        <th class="p-2">Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @forelse($data as $d)
-                    <tr class="border-b hover:bg-gray-50">
-
-                        <td class="p-2">
-                            {{ $d->pemesanan->nama_pelanggan ?? '-' }}
-                        </td>
-
-                        <td class="p-2">{{ $d->metode_pembayaran }}</td>
-
-                        <td class="p-2 text-green-600 font-bold">
-                            Rp {{ number_format($d->total_bayar,0,',','.') }}
-                        </td>
-
-                        <td class="p-2">{{ $d->tanggal_bayar }}</td>
-
-                        <!-- BUKTI -->
-                        <td class="p-2">
-                            @if($d->bukti)
-                                <a href="{{ asset('storage/'.$d->bukti) }}" target="_blank">
-                                    <img src="{{ asset('storage/'.$d->bukti) }}" class="w-16 mx-auto rounded">
-                                </a>
-                            @else
-                                -
-                            @endif
-                        </td>
-
-                        <!-- STATUS -->
-                        <td class="p-2">
-                            <a href="/admin/pembayaran/status/{{ $d->id }}"
-                               class="px-3 py-1 rounded text-white
-                               {{ $d->status_bayar == 'menunggu' ? 'bg-yellow-500' : 'bg-green-500' }}">
-
-                                {{ $d->status_bayar }}
-
-                            </a>
-                        </td>
-
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="p-4 text-gray-500">
-                            Belum ada pembayaran
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
+{{-- TITLE --}}
+<div class="px-6 py-6 border-b text-center">
+    <h2 class="text-2xl lg:text-3xl font-bold text-navy">
+        Daftar <span class="italic text-pink">Pembayaran</span>
+    </h2>
+    <p class="text-sm text-gray-400 mt-1">
+        Data transaksi pelanggan terbaru
+    </p>
 </div>
 
-</body>
-</html>
+<div class="overflow-x-auto">
+    <table class="w-full text-sm">
+
+        {{-- HEAD --}}
+        <thead class="bg-lavender/10 text-navy uppercase text-xs tracking-wider">
+            <tr>
+                <th class="px-4 py-3 text-left">Nama</th>
+                <th class="px-4 py-3 text-left">Metode</th>
+                <th class="px-4 py-3 text-left">Total</th>
+                <th class="px-4 py-3 text-left">Tanggal</th>
+                <th class="px-4 py-3 text-center">Bukti</th>
+                <th class="px-4 py-3 text-center">Status</th>
+            </tr>
+        </thead>
+
+        {{-- BODY --}}
+        <tbody class="divide-y divide-lavender/20">
+
+            @forelse($data as $d)
+            <tr class="hover:bg-lavender/5 transition">
+
+                {{-- Nama --}}
+                <td class="px-4 py-3 font-medium text-gray-700">
+                    {{ $d->pemesanan->nama_pelanggan ?? '-' }}
+                </td>
+
+                {{-- Metode --}}
+                <td class="px-4 py-3 text-gray-600">
+                    {{ $d->metode_pembayaran }}
+                </td>
+
+                {{-- Total --}}
+                <td class="px-4 py-3 text-green-600 font-semibold">
+                    Rp {{ number_format($d->total_bayar,0,',','.') }}
+                </td>
+
+                {{-- Tanggal --}}
+                <td class="px-4 py-3 text-gray-500">
+                    {{ $d->tanggal_bayar }}
+                </td>
+
+                {{-- Bukti --}}
+                <td class="px-4 py-3 text-center">
+                    @if($d->bukti)
+                    <a href="{{ asset('storage/'.$d->bukti) }}" target="_blank">
+                        <img src="{{ asset('storage/'.$d->bukti) }}"
+                            class="w-16 h-16 object-cover rounded-lg shadow hover:scale-110 transition mx-auto">
+                    </a>
+                    @else
+                    <span class="text-gray-400 text-xs">-</span>
+                    @endif
+                </td>
+
+                {{-- STATUS (FIXED) --}}
+                <td class="px-4 py-3 text-center">
+                    <a href="/admin/pembayaran/{{ $d->id_pembayaran }}/status"
+                        class="px-3 py-1 rounded 
+        {{ $d->status_bayar == 'lunas' ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white' }}">
+                        {{ $d->status_bayar }}
+                    </a>
+                </td>
+
+            </tr>
+            @empty
+            <tr>
+                <td colspan="6" class="text-center p-6 text-gray-400">
+                    Belum ada pembayaran
+                </td>
+            </tr>
+            @endforelse
+
+        </tbody>
+
+    </table>
+</div>
+
+@endsection

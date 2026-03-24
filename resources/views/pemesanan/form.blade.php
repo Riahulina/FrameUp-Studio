@@ -9,28 +9,36 @@
         <h2 class="font-display font-black text-3xl text-lavender text-center mb-4">
             Form <span class="italic text-pink">Pemesanan</span>
         </h2>
+
         <p class="text-center text-warm text-sm mb-6">
             Isi data untuk memesan frame favoritmu
         </p>
 
+        {{-- ALERT --}}
         @if(session('success'))
         <div class="mb-4 text-green-400 font-bold text-center">
             {{ session('success') }}
         </div>
         @endif
 
+        @if(session('error'))
+        <div class="text-red-400 text-center mb-4">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <form action="{{ route('pemesanan.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <!-- NAMA -->
+            {{-- NAMA --}}
             <input type="text" name="nama" placeholder="Nama Lengkap"
                 class="w-full bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3" required>
 
-            <!-- NO HP -->
+            {{-- NO HP --}}
             <input type="text" name="no_hp" placeholder="No HP / WhatsApp"
                 class="w-full bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3" required>
 
-            <!-- JURUSAN -->
+            {{-- JURUSAN --}}
             <select name="jurusan_select" id="jurusanSelect"
                 class="w-full bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3">
                 <option value="">Pilih Jurusan</option>
@@ -44,9 +52,42 @@
                 placeholder="Isi jurusan jika tidak ada"
                 class="w-full mt-2 bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3 hidden">
 
-            <!-- FRAME -->
+            {{-- ================= FRAME ================= --}}
             <div class="bg-navy border border-lavender/20 rounded-xl p-4">
                 <p class="text-sm text-warm mb-3">Pilih Frame</p>
+
+                {{-- AUTO MODE --}}
+                @if(isset($selectedFrame) && $selectedFrame)
+
+                <div class="border border-lime rounded-xl p-4 text-center bg-lime/10">
+
+                    <p class="text-lime font-bold mb-2">Frame Terpilih</p>
+
+                    <p class="text-lg font-semibold text-lavender">
+                        {{ $selectedFrame->nama_frame }}
+                    </p>
+
+                    <p class="text-sm text-green-400 mb-2">
+                        Rp {{ number_format($selectedFrame->harga,0,',','.') }}
+                    </p>
+
+                    {{-- 🔥 FIX DI SINI --}}
+                    <input type="hidden" name="frame[]" value="{{ $selectedFrame->id_frame }}">
+
+                    <input type="number"
+                        name="qty[{{ $selectedFrame->id_frame }}]"
+                        value="1" min="1"
+                        class="w-full mt-2 border rounded px-2 text-black">
+
+                    <button type="button" onclick="switchManual()"
+                        class="mt-3 text-xs text-pink underline">
+                        Pilih frame lain
+                    </button>
+
+                </div>
+
+                {{-- MANUAL MODE --}}
+                @else
 
                 <div class="flex items-center gap-2">
 
@@ -60,11 +101,14 @@
                             <div class="w-1/3 flex-shrink-0 p-2">
                                 <div class="border border-lavender/20 rounded-xl p-3 text-center">
 
+                                    {{-- 🔥 FIX DI SINI --}}
                                     <input type="checkbox" name="frame[]" value="{{ $frame->id_frame }}">
 
                                     <p class="text-sm mt-2">{{ $frame->nama_frame }}</p>
 
-                                    <input type="number" name="qty[{{ $frame->id_frame }}]" min="1" value="1"
+                                    <input type="number"
+                                        name="qty[{{ $frame->id_frame }}]"
+                                        min="1" value="1"
                                         class="w-full mt-2 border rounded px-2 text-black">
                                 </div>
                             </div>
@@ -77,13 +121,16 @@
                         class="px-3 py-1 bg-lime text-navy rounded">›</button>
 
                 </div>
+
+                @endif
+
             </div>
 
-            <!-- TANGGAL -->
+            {{-- TANGGAL --}}
             <input type="date" name="tanggal"
                 class="w-full bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3" required>
 
-            <!-- BUTTON -->
+            {{-- BUTTON --}}
             <button type="submit"
                 class="w-full bg-lime text-navy font-bold py-3 rounded-full hover:scale-105 transition">
                 Kirim Pemesanan →
@@ -93,38 +140,32 @@
     </div>
 </section>
 
-<!-- SCRIPT -->
+{{-- SCRIPT --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-
-        // ✅ JURUSAN MANUAL
         const select = document.getElementById('jurusanSelect');
         const manual = document.getElementById('jurusanManual');
 
         select.addEventListener('change', function() {
-            if (this.value === 'lainnya') {
-                manual.classList.remove('hidden');
-            } else {
-                manual.classList.add('hidden');
-            }
+            manual.classList.toggle('hidden', this.value !== 'lainnya');
         });
-
     });
 
-    // ✅ SLIDER
     let currentIndex = 0;
     const visibleItems = 3;
 
     function updateSlider() {
         const slider = document.getElementById('frameSlider');
+        if (!slider) return;
         const itemWidth = slider.children[0].offsetWidth;
         slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
     }
 
     function nextFrame() {
         const slider = document.getElementById('frameSlider');
-        const totalItems = slider.children.length;
+        if (!slider) return;
 
+        const totalItems = slider.children.length;
         if (currentIndex < totalItems - visibleItems) {
             currentIndex++;
             updateSlider();
@@ -136,6 +177,10 @@
             currentIndex--;
             updateSlider();
         }
+    }
+
+    function switchManual() {
+        window.location.href = "/pemesanan/create";
     }
 </script>
 @endsection

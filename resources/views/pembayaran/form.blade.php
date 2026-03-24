@@ -44,7 +44,7 @@
 
     <!-- FORM -->
     <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+        @csrf
 
         <input type="hidden" name="id_pemesanan" value="{{ $pemesanan->id_pemesanan }}">
         <input type="hidden" name="total" value="{{ $total }}">

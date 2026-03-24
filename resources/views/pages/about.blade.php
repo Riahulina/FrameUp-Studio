@@ -41,15 +41,15 @@
             </div>
             <div class="reveal delay-200 grid grid-cols-2 gap-4">
                 @foreach([
-                    ['value'=>'120+','label'=>'Projects Completed','bg'=>'bg-lavender'],
-                    ['value'=>'40+', 'label'=>'Happy Clients',      'bg'=>'bg-pink'],
-                    ['value'=>'5+',  'label'=>'Years Experience',   'bg'=>'bg-lime'],
-                    ['value'=>'8',   'label'=>'Team Members',       'bg'=>'bg-green'],
+                ['value'=>'120+','label'=>'Projects Completed','bg'=>'bg-lavender'],
+                ['value'=>'40+', 'label'=>'Happy Clients', 'bg'=>'bg-pink'],
+                ['value'=>'5+', 'label'=>'Years Experience', 'bg'=>'bg-lime'],
+                ['value'=>'8', 'label'=>'Team Members', 'bg'=>'bg-green'],
                 ] as $stat)
-                    <div class="{{ $stat['bg'] }} rounded-3xl p-8 text-center">
-                        <div class="font-display font-black text-4xl text-navy mb-2">{{ $stat['value'] }}</div>
-                        <div class="font-body text-charcoal/60 text-xs">{{ $stat['label'] }}</div>
-                    </div>
+                <div class="{{ $stat['bg'] }} rounded-3xl p-8 text-center">
+                    <div class="font-display font-black text-4xl text-navy mb-2">{{ $stat['value'] }}</div>
+                    <div class="font-body text-charcoal/60 text-xs">{{ $stat['label'] }}</div>
+                </div>
                 @endforeach
             </div>
         </div>
@@ -61,23 +61,77 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-16 reveal">
             <span class="font-mono text-lime/70 text-xs tracking-[0.3em] uppercase mb-4 block">The People</span>
-            <h2 class="font-display font-black text-4xl lg:text-5xl text-lavender">Meet the <span class="italic text-pink">Team</span></h2>
+            <h2 class="font-display font-black text-4xl lg:text-5xl text-lavender">
+                Meet the <span class="italic text-pink">Team</span>
+            </h2>
         </div>
+
         @php
             $team = [
-                ['name'=>'Aisha Kamil',   'role'=>'Creative Director', 'emoji'=>'👩‍🎨', 'color'=>'bg-lavender/20', 'delay'=>'delay-0'],
-                ['name'=>'Rizky Pratama', 'role'=>'Lead Designer',     'emoji'=>'👨‍💻', 'color'=>'bg-pink/20',     'delay'=>'delay-100'],
-                ['name'=>'Sari Dewi',     'role'=>'Brand Strategist',  'emoji'=>'👩‍💼', 'color'=>'bg-lime/20',     'delay'=>'delay-200'],
-                ['name'=>'Budi Santoso',  'role'=>'Motion Designer',   'emoji'=>'🎬',  'color'=>'bg-green/20',    'delay'=>'delay-300'],
+                [
+                    'name'=>'Aisha Kamil',
+                    'role'=>'Creative Director',
+                    'photo'=>'/images/team/aisha.jpg',
+                    'color'=>'bg-lavender/20',
+                    'delay'=>'delay-0'
+                ],
+                [
+                    'name'=>'Rizky Pratama',
+                    'role'=>'Photographer Lead',
+                    'photo'=>'/images/team/rizky.jpg',
+                    'color'=>'bg-pink/20',
+                    'delay'=>'delay-100'
+                ],
+                [
+                    'name'=>'Sari Dewi',
+                    'role'=>'Event Coordinator',
+                    'photo'=>'/images/team/sari.jpg',
+                    'color'=>'bg-lime/20',
+                    'delay'=>'delay-200'
+                ],
+                [
+                    'name'=>'Budi Santoso',
+                    'role'=>'Motion & Editing',
+                    'photo'=>'/images/team/budi.jpg',
+                    'color'=>'bg-green/20',
+                    'delay'=>'delay-300'
+                ],
+                [
+                    'name'=>'Dina Saputra',
+                    'role'=>'Customer Experience',
+                    'photo'=>'/images/team/dina.jpg',
+                    'color'=>'bg-blush/20',
+                    'delay'=>'delay-400'
+                ],
+                [
+                    'name'=>'Andi Wijaya',
+                    'role'=>'Technical Support',
+                    'photo'=>'/images/team/andi.jpg',
+                    'color'=>'bg-lavender/20',
+                    'delay'=>'delay-500'
+                ],
             ];
         @endphp
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($team as $member)
                 <div class="card-hover reveal {{ $member['delay'] }} text-center">
                     <div class="{{ $member['color'] }} border border-lavender/10 rounded-3xl p-8">
-                        <div class="w-20 h-20 bg-lavender/10 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-4">{{ $member['emoji'] }}</div>
-                        <div class="font-display font-bold text-lg text-lavender mb-1">{{ $member['name'] }}</div>
-                        <div class="font-mono text-warm text-xs tracking-wider">{{ $member['role'] }}</div>
+
+                        {{-- FOTO --}}
+                        <div class="w-24 h-24 mx-auto mb-4">
+                            <img src="{{ $member['photo'] }}"
+                                 alt="{{ $member['name'] }}"
+                                 class="w-full h-full object-cover rounded-2xl shadow-lg">
+                        </div>
+
+                        <div class="font-display font-bold text-lg text-lavender mb-1">
+                            {{ $member['name'] }}
+                        </div>
+                        <div class="font-mono text-warm text-xs tracking-wider">
+                            {{ $member['role'] }}
+                        </div>
+
                     </div>
                 </div>
             @endforeach
@@ -93,22 +147,22 @@
             <h2 class="font-display font-black text-4xl lg:text-5xl text-navy">Our <span class="italic text-dusty">Values</span></h2>
         </div>
         @php
-            $values = [
-                ['icon'=>'✦','title'=>'Intentionality','desc'=>'Every design decision is deliberate. We never place a pixel without purpose.',            'delay'=>'delay-0'],
-                ['icon'=>'♥','title'=>'Empathy',       'desc'=>'We listen deeply to understand not just what you want, but why you want it.',             'delay'=>'delay-100'],
-                ['icon'=>'◎','title'=>'Craft',         'desc'=>'We obsess over details. The space between letters matters. The curve of a shape matters.','delay'=>'delay-200'],
-                ['icon'=>'↗','title'=>'Growth',        'desc'=>'We push boundaries — ours and yours — to create work that moves beyond the expected.',    'delay'=>'delay-300'],
-                ['icon'=>'✿','title'=>'Joy',           'desc'=>'Design should be fun! We bring energy, humour, and delight to the creative process.',     'delay'=>'delay-400'],
-                ['icon'=>'⬡','title'=>'Transparency', 'desc'=>'Open communication, clear timelines, and honest feedback — always.',                      'delay'=>'delay-500'],
-            ];
+        $values = [
+        ['icon'=>'✦','title'=>'Intentionality','desc'=>'Every design decision is deliberate. We never place a pixel without purpose.', 'delay'=>'delay-0'],
+        ['icon'=>'♥','title'=>'Empathy', 'desc'=>'We listen deeply to understand not just what you want, but why you want it.', 'delay'=>'delay-100'],
+        ['icon'=>'◎','title'=>'Craft', 'desc'=>'We obsess over details. The space between letters matters. The curve of a shape matters.','delay'=>'delay-200'],
+        ['icon'=>'↗','title'=>'Growth', 'desc'=>'We push boundaries — ours and yours — to create work that moves beyond the expected.', 'delay'=>'delay-300'],
+        ['icon'=>'✿','title'=>'Joy', 'desc'=>'Design should be fun! We bring energy, humour, and delight to the creative process.', 'delay'=>'delay-400'],
+        ['icon'=>'⬡','title'=>'Transparency', 'desc'=>'Open communication, clear timelines, and honest feedback — always.', 'delay'=>'delay-500'],
+        ];
         @endphp
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($values as $v)
-                <div class="reveal {{ $v['delay'] }} bg-navy/5 border border-navy/10 rounded-3xl p-8 hover:bg-navy/10 transition-colors duration-300 card-hover">
-                    <div class="font-display text-4xl text-navy/30 mb-4">{{ $v['icon'] }}</div>
-                    <h3 class="font-display font-bold text-xl text-navy mb-3">{{ $v['title'] }}</h3>
-                    <p class="font-body text-charcoal/60 text-sm leading-relaxed">{{ $v['desc'] }}</p>
-                </div>
+            <div class="reveal {{ $v['delay'] }} bg-navy/5 border border-navy/10 rounded-3xl p-8 hover:bg-navy/10 transition-colors duration-300 card-hover">
+                <div class="font-display text-4xl text-navy/30 mb-4">{{ $v['icon'] }}</div>
+                <h3 class="font-display font-bold text-xl text-navy mb-3">{{ $v['title'] }}</h3>
+                <p class="font-body text-charcoal/60 text-sm leading-relaxed">{{ $v['desc'] }}</p>
+            </div>
             @endforeach
         </div>
     </div>
@@ -122,7 +176,7 @@
         </h2>
         <p class="font-body text-warm mb-10">We're always excited to meet new clients and take on interesting challenges.</p>
         <a href="{{ url('/contact') }}"
-           class="inline-flex items-center gap-2 bg-lime text-navy font-mono font-bold text-sm px-8 py-4 rounded-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-xl shadow-lime/20">
+            class="inline-flex items-center gap-2 bg-lime text-navy font-mono font-bold text-sm px-8 py-4 rounded-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-xl shadow-lime/20">
             Get in Touch →
         </a>
     </div>

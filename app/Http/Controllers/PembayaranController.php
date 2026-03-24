@@ -63,7 +63,21 @@ class PembayaranController extends Controller
     public function struk($id)
     {
         $pemesanan = Pemesanan::with('details.frame')->findOrFail($id);
+
         $pembayaran = Pembayaran::where('id_pemesanan', $id)->first();
+
+        //  kalau belum ada pembayaran → buat otomatis
+        if (!$pembayaran) {
+            $pembayaran = Pembayaran::create([
+                'id_pemesanan' => $id,
+                'metode_pembayaran' => 'Transfer / Manual',
+                'total_bayar' => $pemesanan->details->sum(function ($item) {
+                    return $item->qty * $item->frame->harga;
+                }),
+                'tanggal_bayar' => now(),
+                'status_bayar' => 'menunggu'
+            ]);
+        }
 
         return view('pembayaran.struk', compact('pemesanan', 'pembayaran'));
     }
@@ -79,5 +93,21 @@ class PembayaranController extends Controller
         $pdf = Pdf::loadView('pembayaran.struk_pdf', compact('pemesanan', 'pembayaran'));
 
         return $pdf->download('struk-' . $id . '.pdf');
+    }
+
+    public function updateStatus($id)
+    {
+        $pembayaran = Pembayaran::findOrFail($id);
+
+        // toggle status
+        if ($pembayaran->status_bayar == 'menunggu') {
+            $pembayaran->status_bayar = 'lunas';
+        } else {
+            $pembayaran->status_bayar = 'menunggu';
+        }
+
+        $pembayaran->save();
+
+        return back()->with('success', 'Status berhasil diubah');
     }
 }
