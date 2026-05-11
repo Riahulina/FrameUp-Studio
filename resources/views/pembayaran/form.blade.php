@@ -61,7 +61,7 @@
         <div id="qrisSection" class="hidden mb-4 text-center">
             <p class="mb-2 font-semibold">Scan QRIS untuk pembayaran:</p>
 
-            <img src="{{ asset('images/dana.jpeg') }}"
+            <img src="{{ asset('images/qris.jpeg') }}"
                 class="mx-auto w-48 mb-3 border rounded">
 
             <input type="file" name="bukti" accept="image/*"

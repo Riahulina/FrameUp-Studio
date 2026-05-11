@@ -9,7 +9,7 @@
 
         <!-- HEADER -->
         <div class="bg-navy text-white text-center py-6">
-            <h2 class="text-2xl font-bold tracking-wide">FRAME UP</h2>
+            <h2 class="text-2xl font-bold tracking-wide">FrameUp</h2>
             <p class="text-sm text-lavender">Struk Pembayaran</p>
         </div>
 
@@ -37,7 +37,7 @@
 
                 <div class="flex justify-between bg-gray-50 p-2 rounded-lg">
                     <span class="text-gray-700">
-                        {{ $item->frame->nama_frame }} 
+                        {{ $item->frame->nama_frame }}
                         <span class="text-xs text-warm">(x{{ $item->qty }})</span>
                     </span>
                     <span class="font-medium text-navy">
@@ -69,7 +69,7 @@
             <!-- BUTTON -->
             <div class="flex justify-center mt-5">
                 <a href="{{ url('/struk/'.$pemesanan->id_pemesanan.'/download') }}"
-                   class="bg-pink text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition">
+                    class="bg-pink text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition">
                     ⬇️ Unduh Struk PDF
                 </a>
             </div>
@@ -77,6 +77,7 @@
         </div>
 
     </div>
+
 
 </div>
 @endsection

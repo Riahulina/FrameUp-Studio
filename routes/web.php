@@ -9,6 +9,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrameController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,7 @@ Route::post('/contact', function () {
     return redirect()->route('contact')->with('success', 'Thank you! We\'ll get back to you within 24 hours.');
 })->name('contact.send');
 
-Route::get('/works', [FrameController::class,'works'])->name('works');
+Route::get('/works', [FrameController::class, 'works'])->name('works');
 
 
 // ================= PEMESANAN =================
@@ -54,6 +56,7 @@ Route::post('/pemesanan/store', [PemesananController::class, 'store'])
 
 // ================= ADMIN =================
 Route::get('/pemesanan', [PemesananController::class, 'index']);
+Route::get('/admin/chart', [PemesananController::class, 'chart']);
 
 /*
 |--------------------------------------------------------------------------
@@ -114,7 +117,7 @@ Route::post('/contact', [ContactController::class, 'store']);
 
 // Admin page
 Route::get('/contacts', [ContactController::class, 'index']);
-Route::get('/admin/contacts/{id}', [ContactController::class, 'show']); 
+Route::get('/admin/contacts/{id}', [ContactController::class, 'show']);
 
 Route::get('/laporan', [LaporanController::class, 'index']);
 Route::get('/laporan/download', [LaporanController::class, 'downloadPdf']);

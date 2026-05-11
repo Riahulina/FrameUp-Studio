@@ -22,18 +22,18 @@
 
 {{-- ALERT --}}
 @if(session('success'))
-    <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-6 shadow">
-        {{ session('success') }}
-    </div>
+<div class="bg-green-100 text-green-700 p-3 rounded-lg mb-6 shadow">
+    {{ session('success') }}
+</div>
 @endif
 
 {{-- ACTION --}}
 <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl text-center lg:text-3xl text-lavender font-bold mb-2">
-            Daftar <span class="italic text-pink">Frame</span></h2>
+        Daftar <span class="italic text-pink">Frame</span></h2>
 
     <a href="/frame/create"
-       class="bg-lime text-navy px-4 py-2 rounded-xl shadow hover:scale-105 transition">
+        class="bg-lime text-navy px-4 py-2 rounded-xl shadow hover:scale-105 transition">
         + Tambah Frame
     </a>
 </div>
@@ -63,7 +63,7 @@
                 {{-- IMAGE --}}
                 <td class="px-4 py-3">
                     <img src="{{ asset($f->gambar_frame) }}"
-                         class="w-16 h-16 object-cover rounded-lg shadow">
+                        class="w-16 h-16 object-cover rounded-lg shadow">
                 </td>
 
                 {{-- DATA --}}
@@ -82,9 +82,9 @@
                 {{-- ACTION --}}
                 <td class="px-4 py-3 text-center space-x-2">
 
-                    <a href="/frame/delete/{{ $f->id }}"
-                       class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
-                       onclick="return confirm('Yakin hapus?')">
+                    <a href="/frame/delete/{{ $f->id_frame }}"
+                        class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                        onclick="return confirm('Yakin hapus?')">
                         Hapus
                     </a>
 

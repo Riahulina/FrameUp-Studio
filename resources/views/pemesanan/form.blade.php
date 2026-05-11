@@ -42,9 +42,10 @@
             <select name="jurusan_select" id="jurusanSelect"
                 class="w-full bg-navy border border-lavender/20 text-lavender rounded-xl px-4 py-3">
                 <option value="">Pilih Jurusan</option>
-                <option>Teknik Informatika</option>
-                <option>Sistem Informasi</option>
+                <option>Teknik Komputer dan Informatika</option>
                 <option>Akuntansi</option>
+                <option>Teknik Sipil</option>
+                <option>Teknik Mesin</option>
                 <option value="lainnya">Lainnya...</option>
             </select>
 

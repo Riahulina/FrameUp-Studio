@@ -67,73 +67,41 @@
         </div>
 
         @php
-            $team = [
-                [
-                    'name'=>'Aisha Kamil',
-                    'role'=>'Creative Director',
-                    'photo'=>'/images/team/aisha.jpg',
-                    'color'=>'bg-lavender/20',
-                    'delay'=>'delay-0'
-                ],
-                [
-                    'name'=>'Rizky Pratama',
-                    'role'=>'Photographer Lead',
-                    'photo'=>'/images/team/rizky.jpg',
-                    'color'=>'bg-pink/20',
-                    'delay'=>'delay-100'
-                ],
-                [
-                    'name'=>'Sari Dewi',
-                    'role'=>'Event Coordinator',
-                    'photo'=>'/images/team/sari.jpg',
-                    'color'=>'bg-lime/20',
-                    'delay'=>'delay-200'
-                ],
-                [
-                    'name'=>'Budi Santoso',
-                    'role'=>'Motion & Editing',
-                    'photo'=>'/images/team/budi.jpg',
-                    'color'=>'bg-green/20',
-                    'delay'=>'delay-300'
-                ],
-                [
-                    'name'=>'Dina Saputra',
-                    'role'=>'Customer Experience',
-                    'photo'=>'/images/team/dina.jpg',
-                    'color'=>'bg-blush/20',
-                    'delay'=>'delay-400'
-                ],
-                [
-                    'name'=>'Andi Wijaya',
-                    'role'=>'Technical Support',
-                    'photo'=>'/images/team/andi.jpg',
-                    'color'=>'bg-lavender/20',
-                    'delay'=>'delay-500'
-                ],
-            ];
+        $team = [
+        // ===== BARIS ATAS =====
+        ['name' => 'Riah Ulina', 'role' => 'Programmer', 'photo' => asset('images/riahulina2.png'), 'color' => 'bg-lavender/20', 'delay' => 'delay-0'],
+        ['name' => 'Nicholas Aprino', 'role' => 'Operator 2', 'photo' => asset('images/niko3.png'), 'color' => 'bg-pink/20', 'delay' => 'delay-100'],
+        ['name' => 'Nurul Inayah', 'role' => 'Admin', 'photo' => asset('images/inayah.png'), 'color' => 'bg-lime/20', 'delay' => 'delay-200'],
+        // ===== BARIS BAWAH =====
+        ['name' => 'Syafitri Uswatun', 'role' => 'Kasir', 'photo' => asset('images/uswa2.png'), 'color' => 'bg-green/20', 'delay' => 'delay-300'],
+        ['name' => 'Dwika Br. Naibaho','role' => 'Operator 1', 'photo' => asset('images/dwi.png'), 'color' => 'bg-blush/20', 'delay' => 'delay-400'],
+        ['name' => 'Dita Liana', 'role' => 'Editor', 'photo' => asset('images/dita.jpeg'), 'color' => 'bg-lavender/20', 'delay' => 'delay-500'],
+        ];
         @endphp
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($team as $member)
-                <div class="card-hover reveal {{ $member['delay'] }} text-center">
-                    <div class="{{ $member['color'] }} border border-lavender/10 rounded-3xl p-8">
+            <div class="card-hover reveal {{ $member['delay'] }} text-center">
+                <div class="{{ $member['color'] }} border border-lavender/10 rounded-3xl p-8">
 
-                        {{-- FOTO --}}
-                        <div class="w-24 h-24 mx-auto mb-4">
-                            <img src="{{ $member['photo'] }}"
-                                 alt="{{ $member['name'] }}"
-                                 class="w-full h-full object-cover rounded-2xl shadow-lg">
-                        </div>
-
-                        <div class="font-display font-bold text-lg text-lavender mb-1">
-                            {{ $member['name'] }}
-                        </div>
-                        <div class="font-mono text-warm text-xs tracking-wider">
-                            {{ $member['role'] }}
-                        </div>
-
+                    {{-- FOTO: lingkaran profesional, ukuran seragam --}}
+                    <div class="w-28 h-28 mx-auto mb-5 rounded-full overflow-hidden ring-2 ring-lavender/30 ring-offset-2 ring-offset-transparent shadow-xl">
+                        <img
+                            src="{{ $member['photo'] }}"
+                            alt="{{ $member['name'] }}"
+                            class="w-full h-full object-cover object-top"
+                            style="aspect-ratio: 1 / 1;">
                     </div>
+
+                    <div class="font-display font-bold text-lg text-lavender mb-1">
+                        {{ $member['name'] }}
+                    </div>
+                    <div class="font-mono text-warm text-xs tracking-wider">
+                        {{ $member['role'] }}
+                    </div>
+
                 </div>
+            </div>
             @endforeach
         </div>
     </div>

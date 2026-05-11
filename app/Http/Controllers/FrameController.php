@@ -39,17 +39,22 @@ class FrameController extends Controller
         return redirect('/frame')->with('success', 'Frame berhasil ditambahkan');
     }
 
-    
+
     public function works()
     {
         $frames = Frame::all();
         return view('pages.works', compact('frames'));
     }
-    public function destroy($id)
+    public function destroy(int $id_frame)
     {
-        Frame::find($id)->delete();
-        return redirect('/frame');
-    }
+        $frame = Frame::findOrFail($id_frame);
 
-    
+        if (file_exists(public_path($frame->gambar_frame))) {
+            unlink(public_path($frame->gambar_frame));
+        }
+
+        $frame->delete();
+
+        return redirect('/frame')->with('success', 'Frame berhasil dihapus');
+    }
 }

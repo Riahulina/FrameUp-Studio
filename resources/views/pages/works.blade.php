@@ -27,37 +27,37 @@
 
 {{-- WORKS GRID --}}
 <section class="py-16 bg-navy">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 
             @forelse($frames as $frame)
             <div class="group">
 
-                <div class="bg-cream rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300">
+                <div class="bg-cream rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 max-w-xs mx-auto">
 
                     {{-- IMAGE --}}
-                    <div class="aspect-[4/3] overflow-hidden">
+                    <div class="h-56 bg-white flex items-center justify-center p-3">
                         <img src="{{ asset($frame->gambar_frame) }}"
-                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            class="max-w-full max-h-full object-contain group-hover:scale-105 transition duration-500">
                     </div>
 
                     {{-- CONTENT --}}
-                    <div class="p-6">
+                    <div class="p-4">
 
                         {{-- TAG + YEAR --}}
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs px-3 py-1 rounded-full bg-navy/10 text-navy font-mono">
+                            <span class="text-[11px] px-3 py-1 rounded-full bg-navy/10 text-navy font-mono">
                                 {{ $frame->jurusan }}
                             </span>
 
-                            <span class="text-xs text-gray-400">
+                            <span class="text-[11px] text-gray-400">
                                 {{ optional($frame->created_at)->format('Y') ?? '-' }}
                             </span>
                         </div>
 
                         {{-- TITLE --}}
-                        <h3 class="font-display text-xl font-bold text-navy group-hover:text-pink transition">
+                        <h3 class="text-lg font-bold text-navy group-hover:text-pink transition">
                             {{ $frame->nama_frame }}
                         </h3>
 
@@ -68,7 +68,7 @@
 
                         {{-- BUTTON --}}
                         <a href="{{ url('/pemesanan/create?frame_id='.$frame->id_frame) }}"
-                            class="mt-4 block text-center bg-lime text-navy font-bold py-2 rounded-xl hover:scale-105 transition">
+                            class="mt-4 block text-center bg-lime text-navy font-bold py-2 rounded-lg hover:scale-105 transition">
                             Pesan Sekarang
                         </a>
 
@@ -79,7 +79,6 @@
             </div>
             @empty
 
-            {{-- EMPTY --}}
             <div class="col-span-3 text-center text-gray-400 py-20">
                 Belum ada data frame
             </div>
@@ -87,7 +86,6 @@
             @endforelse
 
         </div>
-
     </div>
 </section>
 
